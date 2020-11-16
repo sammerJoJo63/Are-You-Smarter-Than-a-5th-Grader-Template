@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+/* Remove the navbar's default margin-bottom and rounded borders */
+.navbar {
+  margin-bottom: 0 !important;
+  border-radius: 0 !important;
+  color: #fff !important;
+  height: 6vh;
+}
+
+.navbar a {
+  color: #fff !important;
+}
+
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content, .sidenav {
+  min-height: 88vh;
+}
+
+.row.content {
+  background-color: #17c200;
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+  padding-top: 20px !important;
+  background-color: #1ade00 !important;
+  height: 100% !important;
+}
+
+h1 {
+  font-family: 'Indie Flower', cursive;
+  text-align: center !important;
+  margin: 20px;
+  color: #ffff;
+  padding-bottom: 75px;
+}
+
+/* Set black background color, white text and some padding */
+footer {
+  background-color: #555 !important;
+  color: white !important;
+  padding: 15px !important;
+  height: 6vh;
+}
+
+footer p {
+  margin-bottom: 0;
+}
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px !important;) {
+  .sidenav {
+    height: auto !important;
+    padding: 15px !important;
+  }
+  .row.content {
+    height:auto !important;
+  }
+}
+
+.upper {
+  text-transform: uppercase;
+}
+
+.gameplay {
+  width: 100%;
+  display: inline-block;
+}
+
+.btn {
+  color: #002869;
+  border-color: #002869;
+}
+
+.btn:hover {
+    color: #0057e3;
+    border-color: #0057e3;
+}
+
+.gameplay .half {
+  margin: 10px;
+  width: 40% !important;
+}
+
+.btn.btn1 {
+  background-color: #ff5994;
+}
+
+.btn.btn2 {
+  background-color: #ff9668;
+}
+
+.btn.btn3 {
+  background-color:	#edff8f
+}
+
+.btn.btn4 {
+  background-color: #84ff9f;
+}
+
+.btn.btn5 {
+  background-color: #82b6ff;
+}
