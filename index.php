@@ -9,18 +9,17 @@
 	<link rel="stylesheet" href="css/custom.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <!-- <script src="js/custom.js"></script> -->
 </head>
 <body>
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-	  <a class="navbar-brand" href="#">NAMI GAME NIGHT</a>
+	  <a class="navbar-brand" href="#">GAME NIGHT</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
 	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 	    <div class="navbar-nav">
-	      <a class="nav-item nav-link active" href="#">AYSTA5G?</a>
+	      <a class="nav-item nav-link active" href="<?php BASEURL; ?>/fifthgrader/index.php">AYSTA5G?</a>
 	    </div>
 	  </div>
 </nav>
@@ -30,7 +29,7 @@
     <div class="col-sm-2 sidenav">
 
     </div>
-    <div class="col-sm-8 text-left">
+    <div class="col-sm-8">
       <h1>ARE YOU SMARTER THAN A 5TH GRADER?</h1>
 
 			<?php
@@ -39,14 +38,13 @@
 				if (!$conn) {
 					die("Connection failed: " . mysqli_connect_error());
 				}
-				$sql = "SELECT DISTINCT grade FROM game_play_one";
+        $tablename = TABLENAME;
+				$sql = "SELECT DISTINCT grade FROM $tablename";
 				$result = mysqli_query($conn, $sql);
 				$grade = array();
 				if (mysqli_num_rows($result) > 0) {
 					while($row = mysqli_fetch_assoc($result)) {
-						//$int = settype($row['grade'], "integer");
 						array_push($grade, $row['grade']);
-						//array_push($grade, $int);
 					}
 				} else {
 					echo "0 results";
@@ -56,10 +54,11 @@
 
 				$i = 0;
 				foreach($grade as $key=>$value) {
-						$sql = "SELECT ID, grade, subject, played FROM game_play_one WHERE grade='$value'";
+						$sql = "SELECT ID, grade, subject, played FROM $tablename WHERE grade='$value'";
 						$result = mysqli_query($conn, $sql);
 						if (mysqli_num_rows($result) > 0) {
 							while($row = mysqli_fetch_array($result)) {
+                echo '<div class="halfCont">';
 								echo '<div class="half btn' . $row['grade'] . ' btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" data-id="' . $row['ID'] . '" data-foo="">';
 								echo '<div>';
 								echo $row['grade'];
@@ -76,6 +75,7 @@
 								echo '<span class="upper">' . $row['subject'] . '</span>';
 							  echo '</div>';
 								echo '</div>';
+                echo '</div>';
 							}
 						} else {
 							echo "0 results";
@@ -88,7 +88,9 @@
 				echo '</section>';
 
 			?>
-
+      <div class="img">
+        <img src="img/apple.png" height='150'>
+      </div>
     </div>
     <div class="col-sm-2 sidenav">
 
@@ -124,17 +126,14 @@
 
 <script>
 $(document).ready(function() {
-  //removeAnswered();
   $.ajax({
     url: "ajax/updatedbfreshgame.php",
     context: document.body//,
-    //success: console.log("here")
   });
 
-  $(".btn").click(function () {
+  $(".btn.half").click(function () {
     var id = $(this).data("id");
     $(this).data('foo', id);
-    console.log($(this));
     $(this).hide();
     $.ajax({
       type: "GET",
@@ -160,7 +159,7 @@ $(document).ready(function() {
         $(".modal .modal-title").append((results[0]["subject"]));
 
         $(".btn-secondary").click(function() {
-          $(".modal .modal-body").html(results[0]["answer"]);
+          $(".modal .modal-body").html(results[0]["question"] + '<br><br>' + results[0]["answer"]);
           $(".btn-primary, .close").click(function() {
             $(".modal .modal-body").empty();
             $(".modal .modal-title").empty();
@@ -170,18 +169,15 @@ $(document).ready(function() {
         $(".btn-primary, .close").click(function() {
           $(".modal .modal-body").empty();
           $(".modal .modal-title").empty();
-          //removeAnswered(id);
         });
         $(".btn-secondary").click(function() {
           var id = results[0]['ID'];
-          //console.log(id);
           $.ajax({
             type: "GET",
             url: "ajax/updateanswered.php",
             data: {'id': id},
             context: document.body,
             success: function(result) {
-              //removeAnswered(id);
             }
           });
         });

@@ -1,0 +1,27 @@
+<?php
+require '../config.php';
+$conn = mysqli_connect(HOST, USERNAME, PASSWORD, DBNAME);
+if (!$conn) {
+  die("Connection failed: " . mysqli_connect_error());
+}
+
+$id = $_GET['id'];
+$tablename = TABLENAME;
+$sql = "SELECT ID FROM $tablename WHERE played = 1";
+$result = mysqli_query($conn, $sql);
+
+$answered = array();
+if (mysqli_num_rows($result) > 0) {
+  //echo("here");
+  while($row = mysqli_fetch_assoc($result)) {
+
+    $answered[] = $row;
+
+    echo json_encode($answered);
+   }
+} else {
+  echo "0 results";
+}
+mysqli_close($conn);
+
+?>
