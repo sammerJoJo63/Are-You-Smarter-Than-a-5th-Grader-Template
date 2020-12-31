@@ -5,23 +5,25 @@ if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
 
-$id = $_GET['id'];
 $tablename = TABLENAME;
-$sql = "SELECT ID FROM $tablename WHERE played = 1";
-$result = mysqli_query($conn, $sql);
 
-$answered = array();
+$id = $_GET['id'];
+//echo $id;
+$sql = "SELECT * FROM $tablename WHERE ID = $id";
+//echo $id;
+$result = mysqli_query($conn, $sql);
+$q = array();
 if (mysqli_num_rows($result) > 0) {
   //echo("here");
   while($row = mysqli_fetch_assoc($result)) {
-
-    $answered[] = $row;
-
-    echo json_encode($answered);
+    //$int = settype($row['grade'], "integer");
+    $q[] = $row;
+    //array_push($grade, $int);
+    echo json_encode($q);
    }
+   //echo $row['ID'];
 } else {
   echo "0 results";
 }
 mysqli_close($conn);
-
 ?>
